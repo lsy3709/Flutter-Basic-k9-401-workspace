@@ -68,9 +68,38 @@ class MyAppTest extends StatelessWidget {
             // GestureDetector
             Center(
               child: GestureDetector(
-                onTap: ()       => print('on tap'),
-                onDoubleTap: () => print('on double tap'),
-                onLongPress: () => print('on long press'),
+                // 기본 옵션1
+                // onTap: ()       => print('on tap'),
+                // onDoubleTap: () => print('on double tap'),
+                // onLongPress: () => print('on long press'),
+
+                // 기본 옵션2
+                // 샘플 추가 옵션 확인.
+                // 👇 여기에 자유 드래그(Pan) 옵션을 추가합니다.
+                // onPanStart: (details) {
+                //   print('드래그 시작! 위치: ${details.globalPosition}');
+                // },
+                // onPanUpdate: (details) {
+                //   // details.delta를 통해 손가락이 움직인 거리를 알 수 있습니다.
+                //   print('드래그 중... 이동 거리: ${details.delta}');
+                // },
+                // onPanEnd: (details) {
+                //   print('드래그 종료!');
+                // },
+
+                // 기본 옵션 3
+                // 실물 기기로, 두손가락으로 탭을 해서, 늘리거나, 줄이기 작업.
+                // 👇 Pan 대신 확대/축소(Scale) 옵션을 추가합니다.
+                onScaleStart: (details) {
+                  print('확대/축소 시작!');
+                },
+                onScaleUpdate: (details) {
+                  // details.scale 값이 1.0보다 크면 확대, 작으면 축소입니다.
+                  print('확대/축소 중... 현재 배율: ${details.scale}');
+                },
+                onScaleEnd: (details) {
+                  print('확대/축소 종료!');
+                },
                 child: Container( // 임의의 빨간 박스 넣었다 대신에, 텍스트, 버튼, 다른  UI 가능.
                   decoration: BoxDecoration(color: Colors.red),
                   width: 100.0,
