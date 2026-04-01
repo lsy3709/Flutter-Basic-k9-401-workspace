@@ -66,9 +66,35 @@ class _SignupScreenState extends State<SignupScreen> {
               // [TextField] 글자 입력창
               const TextField(decoration: InputDecoration(labelText: '이메일')),
               const SizedBox(height: 16),
-              const TextField(decoration: InputDecoration(labelText: '패스워드')),
+              // const TextField(decoration: InputDecoration(labelText: '패스워드')),
+              const TextField(
+                // [핵심] 입력되는 텍스트를 가릴지 여부를 결정합니다.
+                obscureText: true,
+
+                // 가려지는 문자를 커스텀하고 싶을 때 사용합니다. (기본값은 '•')
+                obscuringCharacter: '*',
+
+                decoration: InputDecoration(
+                  labelText: '패스워드',
+                  hintText: '비밀번호를 입력하세요',
+                  helperText: '영문, 숫자 포함 8자 이상', // 입력창 하단 안내문구
+                ),
+              ),
               const SizedBox(height: 16),
-              const TextField(decoration: InputDecoration(labelText: '패스워드 확인')),
+              // const TextField(decoration: InputDecoration(labelText: '패스워드 확인')),
+              const TextField(
+                // [핵심] 입력되는 텍스트를 가릴지 여부를 결정합니다.
+                obscureText: true,
+
+                // 가려지는 문자를 커스텀하고 싶을 때 사용합니다. (기본값은 '•')
+                obscuringCharacter: '*',
+
+                decoration: InputDecoration(
+                  labelText: '패스워드확인',
+                  hintText: '비밀번호를 입력하세요',
+                  helperText: '영문, 숫자 포함 8자 이상', // 입력창 하단 안내문구
+                ),
+              ),
               const SizedBox(height: 16),
 
               // [RadioListTile] 성별 선택 (택 1)
