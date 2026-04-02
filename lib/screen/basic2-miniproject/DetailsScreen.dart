@@ -17,7 +17,7 @@ class DetailsScreen extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: 150,
+              // height: 150,
               padding: const EdgeInsets.all(30.0),
               color: Colors.blue,
               child: Center(
@@ -31,7 +31,13 @@ class DetailsScreen extends StatelessWidget {
                     ),
                     Text(
                       '임시 ID : ${args['id']} 번 데이터 정보 받기 '
-                    )
+                    ),
+                    Text(
+                        '임시 email : ${args['email']} '
+                    ),
+                    Text(
+                        '임시 password : ${args['password']} '
+                    ),
                   ],
                 ),
               ),

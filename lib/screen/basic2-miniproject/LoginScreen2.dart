@@ -75,7 +75,15 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     context,
                     '/details',
                   // 순서1 , 보내기 준비 작업
-                  arguments: {'id': 123, 'title': 'Flutter Pro'},),
+                  // 보내기 작업2번, 이메일과, 패스워드 정보를 보내기.
+                  arguments: {
+                      'id': 123,
+                    'title': 'Flutter Pro',
+                    // 입력 받은 , 이메일 , 패스워드
+                    'email' : emailController.text,
+                    'password' : passwordController.text
+
+                  },),
                 child: const Text('임시 상세페이지 이동'),
               ),
             ],
