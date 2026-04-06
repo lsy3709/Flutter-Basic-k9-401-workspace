@@ -19,16 +19,18 @@ class TourController with ChangeNotifier {
     notifyListeners();
 
     final queryParams = {
-      'serviceKey': 'YOUR_SERVICE_KEY', // ⚠️ 본인 인증키 입력
+      'serviceKey': '본인키', // ⚠️ 본인 인증키 입력
       'pageNo':    '1',
       'numOfRows': '100',
       'resultType': 'json',
     };
 
-    // ✅ 맛집 API와 경로만 다름: TourService/getTourKr
+    // ✅ 맛집 API와 경로만 다름: AttractionService/getAttractionKr
     final uri = Uri.https(
       'apis.data.go.kr',
-      '/6260000/TourService/getTourKr',
+      // 틀린 예시
+      // '/6260000/TourService/getTourKr',
+      '/6260000/AttractionService/getAttractionKr', // 명세서의 Call Back URL 경로
       queryParams,
     );
 
@@ -38,7 +40,8 @@ class TourController with ChangeNotifier {
       if (response.statusCode == 200) {
         // ✅ 한글 깨짐 방지: bodyBytes + utf8.decode
         final decoded = jsonDecode(utf8.decode(response.bodyBytes));
-        final dynamic tourData = decoded['getTourKr'];
+        // final dynamic tourData = decoded['getTourKr'];
+        final dynamic tourData = decoded['getAttractionKr'];
 
         if (tourData is Map<String, dynamic> && tourData['item'] is List) {
           final List<dynamic> itemList = tourData['item'];
