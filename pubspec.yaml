@@ -45,7 +45,10 @@ dependencies:
   google_maps_flutter: ^2.6.0   # Google Maps
   #추가
   flutter_dotenv: ^5.1.0   # .env 파일 로드
-
+  #추가
+  sqflite: ^2.3.0        # SQLite 연동
+  path_provider: ^2.1.1  # 로컬 저장소 경로
+  path: ^1.8.3           # 경로 조합
 
 dev_dependencies:
   flutter_test:

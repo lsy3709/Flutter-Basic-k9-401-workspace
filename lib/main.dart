@@ -16,6 +16,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart'; // ✅ 추가
 // ✅ void → Future<void> 로 변경
 Future<void> main() async {
   // ✅ 비동기 작업 전 반드시 호출
+  // "플러터 엔진과 프레임워크를 연결하는
+  // '접착제'를 앱 실행 전에 미리 준비시키는 명령입니다.
+  // "보통 플러터는 runApp()이 실행되면서 엔진이 가동되는데,
+  // 그보다 먼저 엔진의 기능(위치 정보 접근, 파일 읽기 등)을 써야 할 때
+  // "야, 아직 앱 안 띄웠어도 엔진부터 좀 켜봐!"라고 요청하는 것입니다.
   WidgetsFlutterBinding.ensureInitialized();
 
   // ✅ .env 파일 로드 (runApp 전에 실행)
