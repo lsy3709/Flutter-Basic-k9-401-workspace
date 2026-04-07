@@ -33,7 +33,23 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Google Maps API 키 등록 -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_MAPS_API_KEY}" />
     </application>
+    <!-- 위치 권한 (기본 - 앱 사용 중) -->
+<!--    의미: 정밀한 위치 권한 (Fine Location)
+역할: 기기의 GPS 하드웨어를 사용하여 사용자의 매우 정확한 현재 위치를 파악합니다.
+용도: 내비게이션, 달리기 기록 앱, 지도 등 오차가 적어야 하는 기능에 필수적입니다.-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!--    의미: 대략적인 위치 권한 (Coarse Location)
+역할: 주변의 Wi-Fi나 이동통신 기지국 정보를 기반으로 사용자의 **대략적인
+위치(도시나 블록 단위)**를 파악합니다.
+용도: 날씨 앱, 지역 기반 뉴스 등 대략적인 위치만으로도 충분한 경우에 사용되며,
+ GPS보다 배터리 소모가 적습니다.-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Required to query activities that can process text, see:

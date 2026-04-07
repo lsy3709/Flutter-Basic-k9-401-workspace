@@ -28,6 +28,18 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // 추가
+        // local.properties에서 키 읽기
+        def localProperties = new Properties()
+        def localPropertiesFile = rootProject.file('local.properties')
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.withReader('UTF-8') { reader ->
+                localProperties.load(reader)
+            }
+        }
+        // BuildConfig 및 Manifest placeholder로 키 주입
+        manifestPlaceholders['GOOGLE_MAPS_API_KEY'] =
+            localProperties['GOOGLE_MAPS_API_KEY'] ?: '
     }
 
     buildTypes {
