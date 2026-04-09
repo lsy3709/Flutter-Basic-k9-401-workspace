@@ -96,4 +96,49 @@ class TodoRepository {
     final db = await _database;
     await db.rawDelete('DELETE FROM todos');
   }
+
+  // repositories/todo_repository.dart 에 추가
+
+  /// 더미 데이터 일괄 삽입 (트랜잭션 활용)
+  Future<void> insertDummyTodos({
+    int count = 30,
+    bool mixPriority = true,  // 우선순위 혼합 여부
+  }) async {
+    const titles = [
+      'Flutter Provider 학습',
+      'sqflite CRUD 실습',
+      '다트 연산자 복습',
+      '네트워크 API 연동',
+      '상태관리 진화 확인',
+      '테스트 코드 작성',
+      'UI 컴포넌트 분리',
+      '애니메이션 적용',
+      '라우팅 설계',
+      '프로젝트 배포 준비',
+    ];
+    const priorities = ['high', 'medium', 'low'];
+
+    final db = await _database;
+    final now = DateTime.now();
+
+    await db.transaction((txn) async {
+      for (int i = 0; i < count; i++) {
+        final priority = mixPriority
+            ? priorities[i % priorities.length]
+            : 'medium'; // 직접 지정 시 medium 고정
+        await txn.insert(
+          'todos',
+          Todo(
+            title: titles[i % titles.length] + ' (${i + 1})',
+            priority: priority,
+            createdAt: now
+                .subtract(Duration(hours: i * 2))
+                .toIso8601String(),
+          ).toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
+  }
+
 }

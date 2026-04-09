@@ -168,6 +168,12 @@ class _TodoScreenState extends State<TodoScreen> {
           ],
         ),
         actions: [
+          // ✅ 더미 데이터 생성 버튼
+          IconButton(
+            icon: const Icon(Icons.data_array),
+            tooltip: '더미 데이터 생성',
+            onPressed: _showDummyDialog,
+          ),
           IconButton(
             icon: Icon(_showSearch ? Icons.close : Icons.search),
             onPressed: () {
@@ -312,6 +318,91 @@ class _TodoScreenState extends State<TodoScreen> {
       ),
     );
   }
+
+  // _TodoScreenState 안에 추가
+
+  /// 더미 데이터 확인 다이얼로그
+  Future<void> _showDummyDialog() async {
+    int selectedCount = 30;
+    bool mixPriority = true;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDlg) => AlertDialog(
+          title: const Row(
+            children: [
+              Icon(Icons.data_array, color: Colors.green),
+              SizedBox(width: 8),
+              Text('더미 데이터 생성'),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 건수 선택
+              DropdownButtonFormField<int>(
+                value: selectedCount,
+                decoration: const InputDecoration(
+                  labelText: '삽입 건수',
+                  border: OutlineInputBorder(),
+                ),
+                items: const [
+                  DropdownMenuItem(value: 10,  child: Text('10건')),
+                  DropdownMenuItem(value: 30,  child: Text('30건')),
+                  DropdownMenuItem(value: 50,  child: Text('50건')),
+                  DropdownMenuItem(value: 100, child: Text('100건')),
+                ],
+                onChanged: (v) => setDlg(() => selectedCount = v!),
+              ),
+              const SizedBox(height: 12),
+              // 우선순위 혼합 옵션
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('우선순위 혼합'),
+                subtitle: const Text('high / medium / low 순환'),
+                value: mixPriority,
+                onChanged: (v) => setDlg(() => mixPriority = v),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('취소'),
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.bolt),
+              label: const Text('생성'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () => Navigator.pop(ctx, true),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    // Provider 호출 → 로딩 상태는 Provider가 자동 업데이트
+    await context.read<TodoProvider>().insertDummyData(
+      count: selectedCount,
+      mixPriority: mixPriority,
+    );
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('✅ 더미 데이터 $selectedCount건이 추가되었습니다.'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
 }
 
 // 우선순위 배지 위젯

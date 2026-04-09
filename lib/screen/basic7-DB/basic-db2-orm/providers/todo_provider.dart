@@ -134,4 +134,28 @@ class TodoProvider extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
   }
+
+  // providers/todo_provider.dart 의 CRUD 메서드 영역에 추가
+
+  /// 더미 데이터 일괄 삽입
+  Future<void> insertDummyData({
+    int count = 30,
+    bool mixPriority = true,
+  }) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+    try {
+      await _repo.insertDummyTodos(
+        count: count,
+        mixPriority: mixPriority,
+      );
+      // 삽입 후 목록 첫 페이지로 리로드
+      await loadInitial(keyword: _keyword);
+    } catch (e) {
+      _errorMessage = '더미 데이터 삽입 실패: $e';
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }
